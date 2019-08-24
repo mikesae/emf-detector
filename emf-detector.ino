@@ -12,6 +12,9 @@ int val = 0; // reading from antennaPin
 #define LED3 3
 #define LED4 4
 
+#define BUZZER 6
+#define BUZZER_FREQ_START 440
+
 // variables for smoothing
 
 int readings[NUMREADINGS];                // the readings from the analog input
@@ -27,6 +30,7 @@ void setup() {
   pinMode(LED2, OUTPUT);
   pinMode(LED3, OUTPUT);
   pinMode(LED4, OUTPUT);
+  pinMode(BUZZER, OUTPUT);
 
   Serial.begin(9600);  // initiate serial connection for debugging/etc
 
@@ -40,6 +44,32 @@ void lightWhenAbove(int value, int led, int threshold) {
     digitalWrite(led, HIGH);
   } else {
     digitalWrite(led, LOW);
+  }
+}
+
+#define A_HZ 440
+#define B_HZ 494
+#define C_HZ 523
+#define D_HZ 587
+#define E_HZ 659
+#define F_HZ 698
+#define G_HZ 794
+
+void playTone(int value) {
+  if (value > 300) {
+    tone(BUZZER, A_HZ, 500);
+  } else if (value > 400) {
+    tone(BUZZER, B_HZ, 500);
+  } else if (value > 500) {
+    tone(BUZZER, C_HZ, 500);
+  } else if (value > 600) {
+    tone(BUZZER, D_HZ, 500);
+  } else if (value > 700) {
+    tone(BUZZER, E_HZ, 500);
+  } else if (value > 800) {
+    tone(BUZZER, F_HZ, 500);
+  } else if (value > 900) {
+    tone(BUZZER, G_HZ, 500);
   }
 }
 
@@ -74,6 +104,8 @@ void loop() {
     lightWhenAbove(average, LED2, 500);
     lightWhenAbove(average, LED3, 600);
     lightWhenAbove(average, LED4, 700);
+    
+    playTone(average);
   }
   Serial.println();
   //delay(100);
