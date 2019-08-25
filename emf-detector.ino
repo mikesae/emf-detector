@@ -55,21 +55,27 @@ void lightWhenAbove(int value, int led, int threshold) {
 #define F_HZ 698
 #define G_HZ 794
 
-void playTone(int value) {
+void playTone(int frequency) {
+  tone(BUZZER, frequency, 500);
+  Serial.print(", playTone: ");
+  Serial.print(frequency);
+}
+
+void playToneAt(int value) {
   if (value > 300) {
-    tone(BUZZER, A_HZ, 500);
+    playTone(A_HZ);
   } else if (value > 400) {
-    tone(BUZZER, B_HZ, 500);
+    playTone(B_HZ);
   } else if (value > 500) {
-    tone(BUZZER, C_HZ, 500);
+    playTone(C_HZ);
   } else if (value > 600) {
-    tone(BUZZER, D_HZ, 500);
+    playTone(D_HZ);
   } else if (value > 700) {
-    tone(BUZZER, E_HZ, 500);
+    playTone(E_HZ);
   } else if (value > 800) {
-    tone(BUZZER, F_HZ, 500);
+    playTone(F_HZ);
   } else if (value > 900) {
-    tone(BUZZER, G_HZ, 500);
+    playTone(G_HZ);
   }
 }
 
@@ -105,8 +111,8 @@ void loop() {
     lightWhenAbove(average, LED3, 600);
     lightWhenAbove(average, LED4, 700);
     
-    playTone(average);
+    playToneAt(average);
   }
   Serial.println();
-  //delay(100);
+  delay(1000);
 }
